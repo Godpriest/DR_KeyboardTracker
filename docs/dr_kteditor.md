@@ -1,4 +1,4 @@
-## DR Keyboard Tracker Editor – 左側欄位說明（繁體中文）
+## DR Keyboard Tracker Editor – 功能說明（繁體中文）
 
 這個編輯器用來為 OBS 外掛（DR_KeyboardTracker）設計鍵盤配置。左側欄位包含大多數設定。以下為左側各群組與控制項的用途說明。
 
