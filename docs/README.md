@@ -69,6 +69,12 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 
 **注意**：此插件需要管理員權限來使用 low-level input hooks。確保 OBS Studio 以管理員權限執行。
 
+### 系統日誌輸出
+使用此插件時，OBS Studio 可能會在系統日誌中持續輸出以下訊息：
+- `refresh_locale_list`: 無法找到鍵盤佈局對應
+- `get_keyboard_layout_file`: 登錄檔開啟失敗
+
+**這些日誌輸出屬於正常現象**，不會影響插件功能或系統效能。這是 OBS Studio 核心系統在處理低階鍵盤鉤子時的正常行為，無需擔心。
 
 
 
