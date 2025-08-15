@@ -1,4 +1,4 @@
-## DR Keyboard Tracker Editor – Left Panel Description (English)
+## DR Keyboard Tracker Editor – Feature Description (English)
 
 This editor is used to design keyboard layouts for the OBS plugin (DR_KeyboardTracker). The left panel contains most of the settings. Below is a description of the purpose of each group and control item on the left side.
 
@@ -43,3 +43,4 @@ This editor is used to design keyboard layouts for the OBS plugin (DR_KeyboardTr
 ### Notes
 - Middle mouse button drag for panning, scroll wheel for zooming, drag keys to move; use arrow keys for 1px fine-tuning when selected.
 - Undo (Ctrl+Z) supports up to 100 steps. Dragging records one step when released; manual X/Y input records one step after stopping for 1 second.
+
