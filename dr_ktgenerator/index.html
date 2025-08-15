@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DR Keyboard Tracker Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <style>
+    /* 預覽專用補充樣式（沿用整體風格） */
+    #previewBox { display:flex; align-items:center; justify-content:center; height:100%; }
+    #previewInner { display:inline-flex; flex-direction:column; gap:8px; align-items:center; }
+    #previewCanvas { background:#0b1220; box-shadow:0 0 0 2px var(--stage-outer); max-width:100%; height:auto; }
+    #previewMeta { font-size:12px; color:var(--muted); }
+  </style>
+  <!-- 需以本地或 HTTPS 開啟以使用 File System Access API 選擇資料夾 -->
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="brand">DR Keyboard Tracker Generator</div>
+
+      <section class="panel" id="basePanel">
+        <div class="panel-header">
+          <h3>基底圖片（多倍率）</h3>
+          <button class="icon-btn panel-toggle" aria-expanded="true">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row inline">
+            <label for="defaultUnitSize">預設單位 (1x 寬度)</label>
+            <select id="defaultUnitSize">
+              <option value="64" selected>64</option>
+              <option value="128">128</option>
+            </select>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_1x" class="btn">匯入 1x</button>
+            <div id="baseHint_1x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_1.25x" class="btn">匯入 1.25x</button>
+            <div id="baseHint_1.25x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_1.5x" class="btn">匯入 1.5x</button>
+            <div id="baseHint_1.5x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_1.75x" class="btn">匯入 1.75x</button>
+            <div id="baseHint_1.75x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_2x" class="btn">匯入 2x</button>
+            <div id="baseHint_2x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_2.25x" class="btn">匯入 2.25x</button>
+            <div id="baseHint_2.25x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_2.75x" class="btn">匯入 2.75x</button>
+            <div id="baseHint_2.75x" class="hint"></div>
+          </div>
+          <div class="field-row two">
+            <button id="btnPickBase_6.25x" class="btn">匯入 6.25x</button>
+            <div id="baseHint_6.25x" class="hint"></div>
+          </div>
+          <div class="empty">支援任意尺寸。輸出將固定為上下兩半（未按/按下）。</div>
+        </div>
+      </section>
+
+      <section class="panel" id="previewCtrlPanel">
+        <div class="panel-header">
+          <h3>基本設定</h3>
+          <button class="icon-btn panel-toggle" aria-expanded="true">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row inline">
+            <label for="selPreviewKey">按鍵</label>
+            <select id="selPreviewKey"></select>
+          </div>
+          <div class="field-row inline">
+            <label for="labelOverride">文字</label>
+            <input id="labelOverride" type="text" placeholder="自動符號（可覆寫）" />
+          </div>
+          <div class="field-row inline">
+            <label for="selPreviewScale" id="labelImage">使用圖片</label>
+            <select id="selPreviewScale">
+              <option value="1x">1x</option>
+              <option value="1.25x">1.25x</option>
+              <option value="1.5x">1.5x</option>
+              <option value="1.75x">1.75x</option>
+              <option value="2x" selected>2x</option>
+              <option value="2.25x">2.25x</option>
+              <option value="2.75x">2.75x</option>
+              <option value="6.25x">6.25x</option>
+            </select>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="panel" id="fontPanelTop">
+        <div class="panel-header">
+          <h3>上半字體與樣式（未按）</h3>
+          <button class="icon-btn panel-toggle" aria-expanded="true">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row inline">
+            <label for="selFontTop">字型</label>
+            <select id="selFontTop">
+              <option value="'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif" selected>Noto Sans TC</option>
+              <option value="'Segoe UI', 'Microsoft JhengHei', system-ui, sans-serif">Segoe UI</option>
+              <option value="Arial, 'Microsoft JhengHei', system-ui, sans-serif">Arial</option>
+              <option value="'Microsoft JhengHei', system-ui, sans-serif">微軟正黑體</option>
+            </select>
+          </div>
+          <div class="field-row two">
+            <button id="btnImportFont" class="btn">匯入字型檔</button>
+          </div>
+          <div id="localFontHint" class="hint"></div>
+          <div class="field-row inline">
+            <label for="fontSizeTop">大小(px)</label>
+            <input id="fontSizeTop" type="number" min="6" value="64" />
+          </div>
+          <div class="field-row inline">
+            <label for="fontWeightTop">字重</label>
+            <select id="fontWeightTop">
+              <option value="400">Regular</option>
+              <option value="600" selected>SemiBold</option>
+              <option value="700">Bold</option>
+            </select>
+          </div>
+          <div class="field-row inline">
+            <label for="colorTop">文字色</label>
+            <input id="colorTop" type="color" value="#ffffff" />
+          </div>
+          <div class="field-row inline">
+            <label for="strokeSizeTop">描邊(px)</label>
+            <input id="strokeSizeTop" type="number" min="0" value="4" />
+          </div>
+          <div class="field-row inline">
+            <label for="strokeColorTop">描邊色</label>
+            <input id="strokeColorTop" type="color" value="#000000" />
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="fontPanelBottom">
+        <div class="panel-header">
+          <h3>下半字體與樣式（按下）</h3>
+          <button class="icon-btn panel-toggle" aria-expanded="true">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row inline">
+            <label for="selFontBottom">字型</label>
+            <select id="selFontBottom">
+              <option value="'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif" selected>Noto Sans TC</option>
+              <option value="'Segoe UI', 'Microsoft JhengHei', system-ui, sans-serif">Segoe UI</option>
+              <option value="Arial, 'Microsoft JhengHei', system-ui, sans-serif">Arial</option>
+              <option value="'Microsoft JhengHei', system-ui, sans-serif">微軟正黑體</option>
+            </select>
+          </div>
+          <div class="field-row inline">
+            <label for="fontSizeBottom">大小(px)</label>
+            <input id="fontSizeBottom" type="number" min="6" value="64" />
+          </div>
+          <div class="field-row inline">
+            <label for="fontWeightBottom">字重</label>
+            <select id="fontWeightBottom">
+              <option value="400">Regular</option>
+              <option value="600" selected>SemiBold</option>
+              <option value="700">Bold</option>
+            </select>
+          </div>
+          <div class="field-row inline">
+            <label for="colorBottom">文字色</label>
+            <input id="colorBottom" type="color" value="#ffd54f" />
+          </div>
+          <div class="field-row inline">
+            <label for="strokeSizeBottom">描邊(px)</label>
+            <input id="strokeSizeBottom" type="number" min="0" value="4" />
+          </div>
+          <div class="field-row inline">
+            <label for="strokeColorBottom">描邊色</label>
+            <input id="strokeColorBottom" type="color" value="#000000" />
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="exportPanel">
+        <div class="panel-header">
+          <h3>匯出</h3>
+          <button class="icon-btn panel-toggle" aria-expanded="true">▾</button>
+        </div>
+        <div class="panel-body">
+          <button id="btnExport" class="btn primary">匯出圖片檔</button>
+          <div class="hint">依各鍵設定的倍率與樣式輸出。優先使用「選擇資料夾」直接輸出；若瀏覽器不支援，將下載 ZIP。</div>
+        </div>
+      </section>
+
+      
+    </aside>
+
+    <main id="stageArea">
+      <div id="toolbar">
+        <span id="toolbarHint">選擇基底圖片與字體樣式後，右側將預覽單一鍵的最終兩段式拼合圖。</span>
+        <div style="margin-left:auto; display:flex; gap:8px; align-items:center">
+          <button id="btnLangEn" class="lang-btn" type="button" aria-label="English">EN</button>
+          <button id="btnLangZh" class="lang-btn" type="button" aria-label="Chinese">中文</button>
+        </div>
+      </div>
+      <div id="stageWrapper">
+        <div id="previewBox">
+          <div id="previewInner">
+            <canvas id="previewCanvas" width="256" height="512"></canvas>
+            <div id="previewMeta"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <aside id="rightPanel">
+      <div class="panel-header" style="justify-content:space-between; gap:8px;">
+        <h3 id="rightListTitle">按鍵列表</h3>
+        <button id="btnSelectAllKeys" class="icon-btn">全選</button>
+      </div>
+      <div class="panel-body">
+        <ul id="keyList" class="list"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <input id="fileBase_1x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_1.25x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_1.5x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_1.75x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_2x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_2.25x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_2.75x" type="file" accept="image/*" style="display:none" />
+  <input id="fileBase_6.25x" type="file" accept="image/*" style="display:none" />
+  <input id="fileFont" type="file" accept=".ttf,.otf,.woff,.woff2" multiple style="display:none" />
+  <script src="app.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DR Keyboard Tracker Editor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="brand">DR Keyboard Tracker</div>
+
+      <section class="panel" id="startPanel">
+        <div class="panel-header">
+          <h3>開始</h3>
+          <button id="toggleStartPanel" class="icon-btn" aria-expanded="true" title="收起/展開">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row two" style="margin-top:0">
+            <button id="btnImportJson" class="btn primary">匯入.json</button>
+            <button id="btnPickImageDir" class="btn info">補齊.json圖片</button>
+          </div>
+          <div class="field-row" style="margin-top:8px">
+            <button id="btnImportImages" class="btn">匯入大量圖片</button>
+          </div>
+          <div class="field-row" style="margin-top:4px">
+            <button id="btnDownloadKeyMap" class="btn">下載檔名對照表</button>
+          </div>
+          <div class="field-row inline" style="margin-top:8px">
+            <label for="keyBaseSize">按鍵大小</label>
+            <input id="keyBaseSize" type="number" value="64" min="8" />
+          </div>
+          <div class="field-row inline">
+            <label for="keyGap">按鍵間隔</label>
+            <input id="keyGap" type="number" value="0" min="0" />
+          </div>
+          <div class="field-row inline">
+            <label for="layoutPreset">套用配置</label>
+            <select id="layoutPreset">
+              <option value="ansi104">一般鍵盤</option>
+            </select>
+            <button id="btnApplyLayout" class="btn">套用</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="canvasPanel">
+        <div class="panel-header">
+          <h3>畫布設定</h3>
+          <button id="toggleCanvasPanel" class="icon-btn" aria-expanded="true" title="收起/展開">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="field-row size-row">
+            <div>
+              <label for="canvasWidth">寬 (px)</label>
+              <input id="canvasWidth" type="number" min="1" value="1920" />
+            </div>
+            <div>
+              <label for="canvasHeight">高 (px)</label>
+              <input id="canvasHeight" type="number" min="1" value="1080" />
+            </div>
+            <div class="apply-col">
+              <button id="applyCanvas" class="btn">套用畫布尺寸</button>
+            </div>
+          </div>
+          <div class="field-row inline">
+            <label for="canvasTheme">主題</label>
+            <select id="canvasTheme">
+              <option value="dark" selected>黑暗</option>
+              <option value="light">明亮</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <input id="chkShowIds" type="checkbox" />
+            <label for="chkShowIds">在畫布上顯示按鍵 ID</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="keysPanel">
+        <div class="panel-header">
+          <h3>按鍵</h3>
+          <button id="toggleKeysPanel" class="icon-btn" aria-expanded="true" title="收起/展開">▾</button>
+        </div>
+        <div class="panel-body">
+          <div style="height:6px"></div>
+          <button id="addKey" class="btn">新增按鍵 (64x64)</button>
+        </div>
+      </section>
+
+      <section class="panel" id="propPanel">
+        <div class="panel-header">
+          <h3>屬性</h3>
+          <button id="togglePropPanel" class="icon-btn" aria-expanded="true" title="收起/展開">▾</button>
+        </div>
+        <div class="panel-body">
+          <div class="empty">未選取任何按鍵</div>
+          <div class="fields hidden" id="propFields">
+            <div class="field-row" id="rowId">
+              <label for="propId">ID</label>
+              <input id="propId" type="text" />
+            </div>
+            <div class="field-row inline" id="rowKey">
+              <label for="propKeyBinding">綁定按鍵</label>
+              <input id="propKeyBinding" type="text" placeholder="按「開始綁定」後按一次欲綁定的鍵" readonly />
+            </div>
+            <div class="field-row" id="rowKeyBtns">
+              <button id="btnStartBind" type="button" class="btn">開始綁定</button>
+              <button id="btnClearBind" type="button" class="btn danger">清除綁定</button>
+            </div>
+            <div class="field-row inline" id="rowSprite">
+              <label for="propSprite">圖片路徑</label>
+              <input id="propSprite" type="text" placeholder="例如: images/key_sprite.png" />
+            </div>
+            <div class="field-row" id="rowSpriteBtn">
+              <button id="btnPickSprite" type="button" class="btn">選擇圖片路徑</button>
+            </div>
+            <div id="propSpriteHint" class="hint"></div>
+            <div class="field-row prop-two" id="rowPos">
+              <div>
+                <label for="propX">位置 X</label>
+                <input id="propX" type="number" />
+              </div>
+              <div>
+                <label for="propY">位置 Y</label>
+                <input id="propY" type="number" />
+              </div>
+            </div>
+            <div id="multiAlign" class="inline-actions hidden">
+              <button id="btnAlignX" type="button" class="btn">對齊至 X</button>
+              <button id="btnAlignY" type="button" class="btn">對齊至 Y</button>
+            </div>
+            <div id="multiArrange" class="hidden">
+              <div class="field-row inline-apply">
+                <label for="multiHSpace">水平間距</label>
+                <input id="multiHSpace" type="number" value="100" min="0" />
+                <button id="btnApplyHSpace" type="button" class="btn">套用</button>
+              </div>
+              <div class="field-row inline-apply">
+                <label for="multiVSpace">垂直間距</label>
+                <input id="multiVSpace" type="number" value="100" min="0" />
+                <button id="btnApplyVSpace" type="button" class="btn">套用</button>
+              </div>
+            </div>
+            
+            <div class="field-row" id="rowRot">
+              <label for="propRot">旋轉 (度)</label>
+              <input id="propRot" type="number" step="1" />
+            </div>
+            <button id="deleteKey" class="btn danger">刪除此按鍵</button>
+            <div id="multiSelectHint" class="hint hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sidebar-footer">
+        <button id="exportJson" class="btn primary">匯出.json</button>
+      </div>
+    </aside>
+
+    <main id="stageArea">
+      <div id="toolbar">
+        <span data-i18n="toolbar_hint">Drag keys to arrange. Top-left is (0,0). Press your keyboard to preview pressed bindings.</span>
+        <div style="margin-left:auto; display:flex; gap:8px; align-items:center">
+          <button id="btnLangEn" class="btn" type="button" aria-label="English">EN</button>
+          <button id="btnLangZh" class="btn" type="button" aria-label="Chinese">中文</button>
+        </div>
+      </div>
+      <div id="stageWrapper">
+        <div id="stageScaler">
+          <div id="stage">
+            <div id="originCorner" aria-hidden="true"></div>
+            <div id="selectionGuides" aria-hidden="true" class="hidden">
+              <div class="guide v"></div>
+              <div class="guide h"></div>
+            </div>
+            <div id="multiBox" aria-hidden="true" class="hidden"></div>
+          </div>
+        </div>
+        <div id="fixPrompt" class="fix-prompt hidden">
+          <span data-i18n="fixPromptText">Images may be missing. Please select the images folder.</span>
+          <button id="btnPromptPick" class="btn info" type="button">Fix .json Images</button>
+        </div>
+      </div>
+    </main>
+    <aside id="rightPanel" class="collapsed">
+      <div class="panel-header">
+        <h3 data-i18n="right_list">Object List</h3>
+        <button id="toggleRightPanel" class="icon-btn" aria-expanded="false" title="展開">▶</button>
+      </div>
+      <div class="collapsed-label" data-i18n="right_list">Object List</div>
+      <div class="panel-body">
+        <input id="keySearch" type="text" placeholder="Search ID..." />
+        <ul id="keyList" class="list"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <input id="fileSprite" type="file" accept="image/*" style="display:none" />
+  <input id="fileSaveJson" type="file" accept="application/json,.json" nwsaveas="KeboardTracker.json" style="display:none" />
+  <input id="fileImportJson" type="file" accept="application/json,.json" style="display:none" />
+  <input id="fileImportImages" type="file" accept="image/*" multiple style="display:none" />
+  <input id="dirPickImageBase" type="file" webkitdirectory directory style="display:none" />
+  <input id="dirImportImages" type="file" webkitdirectory directory style="display:none" />
+  <script src="app.js"></script>
+</body>
+</html>
+
+
