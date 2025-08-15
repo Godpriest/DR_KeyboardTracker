@@ -66,3 +66,4 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 
 **注意**：此插件需要管理員權限來使用 low-level input hooks。確保 OBS Studio 以管理員權限執行。
 
+
