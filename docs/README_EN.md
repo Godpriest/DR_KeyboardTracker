@@ -68,5 +68,11 @@ Portions of this plugin's code and documentation were generated and revised with
 
 **Note**: This plugin requires administrator privileges to use low-level input hooks. Ensure OBS Studio is running with administrator privileges.
 
+### System Log Output
+When using this plugin, OBS Studio may continuously output the following messages in system logs:
+- `refresh_locale_list`: Could not find keyboard map for locale
+- `get_keyboard_layout_file`: RegOpenKeyEx failed to open key
+
+**These log outputs are normal behavior** and will not affect plugin functionality or system performance. This is expected behavior from OBS Studio's core system when processing low-level keyboard hooks, and no action is required.
 
 
