@@ -30,7 +30,7 @@ DR_KeyboardTracker is a powerful OBS Studio plugin for real-time tracking and di
 3. The plugin will automatically load images and display keys according to your configuration
 
 ### Image Requirements
-
+- ### [**[按鍵與圖片名稱對應](Key Dilename Mapping)**]
 - **Format**: PNG
 - **Structure**: Each image should contain two states:
   - Upper half: Unpressed state
@@ -67,5 +67,6 @@ Portions of this plugin's code and documentation were generated and revised with
 ---
 
 **Note**: This plugin requires administrator privileges to use low-level input hooks. Ensure OBS Studio is running with administrator privileges.
+
 
 
