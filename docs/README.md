@@ -52,7 +52,9 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 插件包含開啟外部工具的按鈕：
 
 - **編輯器**：開啟鍵盤版面配置編輯器（`dr_kteditor/index.html`）
+- ### [**[編輯器設定說明](dr_kteditor.md)**]
 - **產生器**：開啟圖片產生器工具（`dr_ktgenerator/index.html`）
+### [**[產生器設定說明](dr_ktgenerator.md)**]
 
 這些工具幫助你建立和修改版面配置，無需手動編輯 JSON 檔案。
 
@@ -65,5 +67,6 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 ---
 
 **注意**：此插件需要管理員權限來使用 low-level input hooks。確保 OBS Studio 以管理員權限執行。
+
 
 
