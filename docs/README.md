@@ -30,6 +30,7 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 3. 插件會自動載入圖片並根據你的配置顯示按鍵
 
 ### 圖片需求
+
 - ### [**[按鍵與圖片名稱對應](key_filename_mapping.md)**]
 - **格式**：PNG
 - **結構**：每張圖片應包含兩種狀態：
@@ -67,6 +68,7 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 ---
 
 **注意**：此插件需要管理員權限來使用 low-level input hooks。確保 OBS Studio 以管理員權限執行。
+
 
 
 
