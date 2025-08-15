@@ -52,7 +52,7 @@ DR_KeyboardTracker is a powerful OBS Studio plugin for real-time tracking and di
 The plugin includes buttons to open external tools:
 
 - **Editor**: Opens the keyboard layout editor (`dr_kteditor/index.html`)
-- - ### [**[Editor Feature Description](dr_kteditor_EN.md)**]
+- ### [**[Editor Feature Description](dr_kteditor_EN.md)**]
 - **Generator**: Opens the image generator tool (`dr_ktgenerator/index.html`)
 - ### [**[Generator Feature Description](dr_ktgenerator_EN.md)**]
 
@@ -67,4 +67,5 @@ Portions of this plugin's code and documentation were generated and revised with
 ---
 
 **Note**: This plugin requires administrator privileges to use low-level input hooks. Ensure OBS Studio is running with administrator privileges.
+
 
