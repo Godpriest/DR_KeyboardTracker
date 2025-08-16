@@ -1,5 +1,7 @@
 # DR_KeyboardTracker
+
 ![展示圖片](/images/DR_KeyboardTracker_title_pic.jpg)
+
 ### [**簡介語言:繁體中文 | [Language:English](README_EN.md)**]
 
 DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追蹤和顯示鍵盤與滑鼠的輸入狀態。專為實況主、內容創作者以及任何想要在直播或錄製過程中展示輸入操作的使用者而設計。
@@ -75,6 +77,7 @@ DR_KeyboardTracker是一個功能強大的 OBS Studio 插件，用於即時追�
 - `get_keyboard_layout_file`: 登錄檔開啟失敗
 
 **這些日誌輸出屬於正常現象**，不會影響插件功能或系統效能。這是 OBS Studio 核心系統在處理低階鍵盤鉤子時的正常行為，無需擔心。
+
 
 
 
