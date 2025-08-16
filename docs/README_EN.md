@@ -1,5 +1,7 @@
 # DR_KeyboardTracker
 
+![展示圖片](/images/DR_KeyboardTracker_title_pic.jpg)
+
 ### [**Language: English | [簡介語言:繁體中文](README.md)**]
 
 DR_KeyboardTracker is a powerful OBS Studio plugin for real-time tracking and displaying keyboard and mouse input states. Designed for streamers, content creators, and anyone who wants to showcase input operations during live streaming or recording.
@@ -74,5 +76,6 @@ When using this plugin, OBS Studio may continuously output the following message
 - `get_keyboard_layout_file`: RegOpenKeyEx failed to open key
 
 **These log outputs are normal behavior** and will not affect plugin functionality or system performance. This is expected behavior from OBS Studio's core system when processing low-level keyboard hooks, and no action is required.
+
 
 
